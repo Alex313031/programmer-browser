@@ -1,9 +1,25 @@
 {
+  "name": "programmer-browser",
+  "version": "0.1.9",
+  "license": "MIT",
+  "author": {
+    "name": "yessGlory17",
+    "email": "ozgurkurucan337@gmail.com",
+    "url": "https://github.com/yessGlory17/programmer-browser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yessGlory17/programmer-browser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yessGlory17/programmer-browser/issues"
+  },
   "description": "A fast-searching and space-saving browser specially designed for programmers.",
   "keywords": [
     "javascript",
     "programmer",
-    "browser"
+    "browser",
+    "electron"
   ],
   "main": "./src/main/main.ts",
   "scripts": {
@@ -15,9 +31,12 @@
     "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish always --win --linux",
     "package:win": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win",
     "package:linux": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --linux",
+    "package:dir": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --dir",
     "deploy": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish always --win --linux",
     "prepare": "husky install",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+    "clean": "rimraf ./release/app/dist && rimraf ./release/build && rimraf node_modules",
+    "run": "electron ./release/app",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
@@ -90,6 +109,7 @@
     "@chakra-ui/icons": "^2.0.1",
     "@chakra-ui/react": "^2.1.2",
     "@cliqz/adblocker-electron": "^1.23.8",
+    "@electron/remote": "^2.0.10",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "cross-fetch": "^3.1.5",
@@ -128,8 +148,8 @@
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "detect-port": "^1.3.0",
-    "electron": "^18.2.3",
-    "electron-builder": "^23.0.3",
+    "electron": "^19.1.9",
+    "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-notarize": "^1.2.1",
     "electron-rebuild": "^3.2.7",
@@ -172,70 +192,6 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-merge": "^5.8.0"
-  },
-  "build": {
-    "productName": "ProgrammerBrowser",
-    "appId": "org.erb.ProgrammerBrowser",
-    "asar": true,
-    "asarUnpack": "**\\*.{node,dll}",
-    "files": [
-      "dist",
-      "node_modules",
-      "package.json"
-    ],
-    "afterSign": ".erb/scripts/notarize.js",
-    "mac": {
-      "target": {
-        "target": "default",
-        "arch": [
-          "arm64",
-          "x64"
-        ]
-      },
-      "type": "distribution",
-      "hardenedRuntime": true,
-      "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
-      "gatekeeperAssess": false
-    },
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": [
-        "nsis"
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "app": "release/app",
-      "buildResources": "assets",
-      "output": "release/build"
-    },
-    "extraResources": [
-      "./assets/**"
-    ],
-    "publish": {
-      "provider": "github",
-      "owner": "yessGlory17",
-      "repo": "programmer-browser"
-    }
   },
   "devEngines": {
     "node": ">=14.x",

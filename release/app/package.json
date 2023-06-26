@@ -8,6 +8,13 @@
     "email": "ozgurkurucan337@gmail.com",
     "url": "https://github.com/yessGlory17/programmer-browser"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yessGlory17/programmer-browser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yessGlory17/programmer-browser/issues"
+  },
   "main": "./dist/main/main.js",
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
